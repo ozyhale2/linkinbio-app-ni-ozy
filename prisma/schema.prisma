@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  name  String
+  users User[]
+}
+
+model User {
+  id         Int         @id @default(autoincrement())
+  email      String      @unique
+  password   String
+  name       String
+  role       Role        @relation(fields: [roleId], references: [id])
+  roleId     Int
+  LinkInBios LinkInBio[]
+  active     Boolean     @default(true)
+  deleted    Boolean     @default(false)
+  createdAt  DateTime    @default(now())
+  updateAt   DateTime    @updatedAt
+}
+
+model LinkInBio {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  slug        String   @default(uuid())
+  owner       User     @relation(fields: [ownerId], references: [id])
+  ownerId     Int
+  links       Links[]
+  active      Boolean  @default(true)
+  deleted     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+}
+
+model Links {
+  id          Int       @id @default(autoincrement())
+  name        String
+  link        String
+  linkInBio   LinkInBio @relation(fields: [linkInBioId], references: [id])
+  linkInBioId Int
+  active      Boolean   @default(true)
+  deleted     Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updateAt    DateTime  @updatedAt
+}
