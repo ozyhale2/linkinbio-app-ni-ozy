@@ -1,8 +1,7 @@
 'use server'
 
 import { z } from 'zod'
-import { PrismaClient } from '@prisma/client'
-import { redirect, RedirectType } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import { MessageLevel, setMessage } from '@/app/components/flashMessage/FlashMessage';
 import prisma from '@/lib/prisma';
 
@@ -27,7 +26,7 @@ const addLink = async (data: FormData) => {
 
     const token = await setMessage('Successfully Added a Link', MessageLevel.Success);
 
-    redirect('/admin/linkinbio/' + linkInBioId + '?_fmt=' + token, RedirectType.push)
+    redirect('/admin/linkinbio/' + linkInBioId + '?_fmt=' + token, "push" as any)
 }
 
 const updateLink = async (data: FormData) => {
@@ -47,7 +46,7 @@ const updateLink = async (data: FormData) => {
     const level : number = MessageLevel.Success
     const token = await setMessage('Successfully Updated a Link', level);
 
-    redirect('/admin/linkinbio/' + linkObject.linkInBioId + '?_fmt=' + token, RedirectType.push)
+    redirect('/admin/linkinbio/' + linkObject.linkInBioId + '?_fmt=' + token, "push" as any)
 }
 
 const deleteLink = async (id: number) => {
@@ -65,7 +64,7 @@ const deleteLink = async (id: number) => {
 
     const token = await setMessage('Successfully Deleted a Link in Bio', MessageLevel.Success);
 
-    redirect('/admin/linkinbio/' + link.linkInBioId + '?_fmt=' + token)
+    redirect('/admin/linkinbio/' + link.linkInBioId + '?_fmt=' + token, "push" as any)
 }
 
 export { addLink, updateLink, deleteLink }
