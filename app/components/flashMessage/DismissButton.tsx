@@ -10,7 +10,7 @@ const dismiss = (formData: FormData) => {
 
 const DismissButton = (props: { pathname: string | null }) => {
     return (
-        <form action={dismiss}>
+        <form className='object-right-top' action={dismiss}>
             <input type="hidden" name="pathname" value={props.pathname ? props.pathname : ''} />
             <button>x</button>
         </form>

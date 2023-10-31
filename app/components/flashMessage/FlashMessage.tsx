@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import Alert from './Alert';
 import bcrypt from 'bcrypt'
 import { z } from 'zod';
+import Alert2 from './Alert2';
 
 const zCoerceStr = z.coerce.string();
 const zCoerceNum = z.coerce.number();
@@ -41,9 +42,7 @@ const FlashMessage = () => {
     }
 
     return (
-        <div className='container m-4'>
-            <Alert message={message} token={token} level={levelClass} />
-        </div>
+        <Alert2 message={message} token={token} level={levelClass} />
     )
 }
 

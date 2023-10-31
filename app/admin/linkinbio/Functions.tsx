@@ -2,7 +2,7 @@
 
 import { getServerSession } from 'next-auth';
 import { z } from 'zod'
-import { redirect } from 'next/navigation';
+import { redirect, RedirectType } from 'next/navigation';
 import { setMessage, MessageLevel } from '@/app/components/flashMessage/FlashMessage';
 import prisma from '@/lib/prisma';
 
@@ -38,7 +38,7 @@ const createLinkInBio = async (data: FormData) => {
 
         const token = await setMessage('Successfully Added a Link in Bio', MessageLevel.Success);
 
-        redirect('/admin/linkinbio/' + linkInBio.id + '?_fmt=' + token, "push" as any)
+        redirect('/admin/linkinbio/' + linkInBio.id + '?_fmt=' + token, RedirectType.push)
     }
 }
 
